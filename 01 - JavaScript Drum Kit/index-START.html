@@ -44,7 +44,7 @@
         <span class="sound">tink</span>
       </div>
     </div>
-
+    <!-- <button id="btn">Click</button> -->
     <audio data-key="65" src="sounds/clap.wav"></audio>
     <audio data-key="83" src="sounds/hihat.wav"></audio>
     <audio data-key="68" src="sounds/kick.wav"></audio>
@@ -56,9 +56,32 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
-      const keys = Array.from(document.querySelectorAll(".key"));
+      function handleKeyDownEvent(event) {
+        console.log(event.keyCode);
+        playSound(event);
+      }
+      function handleKeyUpEvent(event) {
+        removeTransition(event);
+      }
+      window.addEventListener("keydown", handleKeyDownEvent);
 
-      keys.forEach(key => key.addEventListener(console.log("pressed")));
+      window.addEventListener("keyup", handleKeyUpEvent);
+
+      function removeTransition(e) {
+        if (e.propertyName !== "transform") return;
+        e.target.classList.remove("playing");
+      }
+
+      function playSound(e) {
+        console.log("clicked");
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+        if (!audio) return;
+
+        key.classList.add("playing");
+        audio.currentTime = 0;
+        audio.play();
+      }
     </script>
   </body>
 </html>

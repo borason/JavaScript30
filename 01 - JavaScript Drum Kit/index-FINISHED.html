@@ -62,6 +62,7 @@
       }
 
       function playSound(e) {
+        console.log("working");
         const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
         const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
         if (!audio) return;
@@ -72,10 +73,7 @@
       }
 
       const keys = Array.from(document.querySelectorAll(".key"));
-      keys.forEach(key => key.addEventListener("transitionend", alertFunction));
-      function alertFunction() {
-        alert("YAY! YOU DID IT!");
-      }
+      keys.forEach(key => key.addEventListener("transitionend", playSound));
     </script>
   </body>
 </html>
